@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package Model;
 
 import java.util.ArrayList;
 
@@ -15,28 +15,29 @@ import java.util.ArrayList;
 
 public class Cliente {
     
+    private int codCliente;
     private String nome;
-    private int cpf;
+    private String cpf;
     private String email;
-    private int celular;
-    private int cep;
+    private String celular;
+    private String cep;
     private String uf;
     private String sexo;
     private String endereco;
-    private int numero;
-    private int complemento;
+    private String numero;
+    private String complemento;
     private String cidade;
     private String bairro;
     private String civil;
-    private int nascimento;
+    private String nascimento;
+    
     private ArrayList<Cliente> ListaCliente;
-    
-    
-public Cliente() {
+
+    public Cliente() {
     ListaCliente = new ArrayList();
-}  
-
-
+    }
+    
+   
 
     //public Cliente(String Nome, int CPF, String Email, int Celular,
     //int CEP, String UF, String Sexo, String Endereço, int Numero, int Complemento,
@@ -59,214 +60,148 @@ public Cliente() {
    // ListaCliente = new ArrayList();
         
    // }
-    
-    public Cliente(String nome, int cpf, String email, int celular){
-    this.nome = nome;
-    this.cpf = cpf;
-    this.celular = celular;
-    this.email = email;
-    ListaCliente = new ArrayList();
+
+    public Cliente(int codCliente, String nome, String cpf, String email, String celular, String cep, String uf, String sexo, String endereco, String numero, String complemento, String cidade, String bairro, String civil, String nascimento, ArrayList<Cliente> ListaCliente) {
+        this.codCliente = codCliente;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.celular = celular;
+        this.cep = cep;
+        this.uf = uf;
+        this.sexo = sexo;
+        this.endereco = endereco;
+        this.numero = numero;
+        this.complemento = complemento;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.civil = civil;
+        this.nascimento = nascimento;
+        this.ListaCliente = ListaCliente;
     }
     
-    /**
-     * @return the Nome
-     */
-       public String getNome() {
+    
+
+    public int getCodCliente() {
+        return codCliente;
+    }
+
+    public void setCodCliente(int codCliente) {
+        this.codCliente = codCliente;
+    }
+
+    public String getNome() {
         return nome;
     }
 
-    /**
-     * @param Nome the Nome to set
-     */
-    public void setNome(String Nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    /**
-     * @return the CPF
-     */
-    public int getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    /**
-     * @param cpf the CPF to set
-     */
-    public void setCpf(int cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
-    /**
-     * @return the Email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * @param email the Email to set
-     */
     public void setEmail(String email) {
         this.email = email;
     }
 
-    /**
-     * @return the Celular
-     */
-    public int getCelular() {
+    public String getCelular() {
         return celular;
     }
 
-    /**
-     * @param Celular the Celular to set
-     */
-    public void setCelular(int celular) {
+    public void setCelular(String celular) {
         this.celular = celular;
     }
 
-    /**
-     * @return the CEP
-     */
-    public int getCep() {
+    public String getCep() {
         return cep;
     }
 
-    /**
-     * @param CEP the CEP to set
-     */
-    public void setCep(int cep) {
+    public void setCep(String cep) {
         this.cep = cep;
     }
 
-    /**
-     * @return the UF
-     */
     public String getUf() {
         return uf;
     }
 
-    /**
-     * @param UF the UF to set
-     */
-    public void setUf(String Uf) {
+    public void setUf(String uf) {
         this.uf = uf;
     }
 
-    /**
-     * @return the Sexo
-     */
     public String getSexo() {
         return sexo;
     }
 
-    /**
-     * @param sexo the Sexo to set
-     */
     public void setSexo(String sexo) {
         this.sexo = sexo;
     }
 
-    /**
-     * @return the Endereço
-     */
-    public String getEndereço() {
+    public String getEndereco() {
         return endereco;
     }
 
-    /**
-     * @param Endereço the Endereço to set
-     */
-    public void setEndereço(String Endereço) {
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
-    /**
-     * @return the Numero
-     */
-    public int getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    /**
-     * @param Numero the Numero to set
-     */
-    public void setNumero(int numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
-    /**
-     * @return the Complemento
-     */
-    public int getComplemento() {
+    public String getComplemento() {
         return complemento;
     }
 
-    /**
-     * @param Complemento the Complemento to set
-     */
-    public void setComplemento(int complemento) {
+    public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
 
-    /**
-     * @return the Cidade
-     */
     public String getCidade() {
         return cidade;
     }
 
-    /**
-     * @param Cidade the Cidade to set
-     */
     public void setCidade(String cidade) {
         this.cidade = cidade;
     }
 
-    /**
-     * @return the Bairro
-     */
     public String getBairro() {
         return bairro;
     }
 
-    /**
-     * @param Bairro the Bairro to set
-     */
     public void setBairro(String bairro) {
         this.bairro = bairro;
     }
 
-    /**
-     * @return the Civil
-     */
     public String getCivil() {
         return civil;
     }
 
-    /**
-     * @param Civil the Civil to set
-     */
     public void setCivil(String civil) {
         this.civil = civil;
     }
 
-    /**
-     * @return the Nascimento
-     */
-    public int getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
 
-    /**
-     * @param Nascimento the Nascimento to set
-     */
-    public void setNascimento(int nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
-
-    /**
-     * @return the ListaCliente
-     */
+    
     public ArrayList<Cliente> getListaCliente() {
         return ListaCliente;
     }
