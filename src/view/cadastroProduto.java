@@ -16,38 +16,60 @@ import javax.swing.table.DefaultTableModel;
  * @author Edu Franco
  */
 public class cadastroProduto extends javax.swing.JFrame {
+
     ArrayList<Produto> ListaProduto;
-    
-    public void loadTrableProduto () {
-        DefaultTableModel modelo = new DefaultTableModel (new Object []{"Código do produto",
-//                                                                        "Tipo do produto",
-                                                                        "Nome",
-                                                                        "Descricao",
-                                                                        "Quantidade",
-                                                                        "Valor unitário"}, 0);
-        for (int i=0; i<ListaProduto.size(); i++) {
-            Object linha[] = new Object []{ListaProduto.get(i).getCodProduto(),
-//                                        ListaProduto.get(i).getTipoFlor(),
-                                        ListaProduto.get(i).getNomeProduto(),
-                                        ListaProduto.get(i).getDescricao(),
-                                        ListaProduto.get(i).getQuantidade(),
-                                        ListaProduto.get(i).getValorUnitario()};
-                    modelo.addRow(linha);
-        }
-        tblProduto.setModel(modelo);
-        tblProduto.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tblProduto.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tblProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tblProduto.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tblProduto.getColumnModel().getColumn(4).setPreferredWidth(100);
-    }
+
+//    public void loadTrableProduto () {
+//        DefaultTableModel modelo = new DefaultTableModel (new Object []{"Código do produto",
+////                                                                        "Tipo do produto",
+//                                                                        "Nome",
+//                                                                        "Descricao",
+//                                                                        "Quantidade",
+//                                                                        "Valor unitário"}, 0);
+//        for (int i=0; i<ListaProduto.size(); i++) {
+//            Object linha[] = new Object []{ListaProduto.get(i).getCodProduto(),
+////                                        ListaProduto.get(i).getTipoFlor(),
+//                                        ListaProduto.get(i).getNomeProduto(),
+//                                        ListaProduto.get(i).getDescricao(),
+//                                        ListaProduto.get(i).getQuantidade(),
+//                                        ListaProduto.get(i).getValorUnitario()};
+//                    modelo.addRow(linha);
+//        }
+//        tblProduto.setModel(modelo);
+//        tblProduto.getColumnModel().getColumn(0).setPreferredWidth(50);
+//        tblProduto.getColumnModel().getColumn(1).setPreferredWidth(100);
+//        tblProduto.getColumnModel().getColumn(2).setPreferredWidth(100);
+//        tblProduto.getColumnModel().getColumn(3).setPreferredWidth(100);
+//        tblProduto.getColumnModel().getColumn(4).setPreferredWidth(100);
+//    }
     /**
      * Creates new form casdastroProduto
      */
     public cadastroProduto() {
         initComponents();
-        setLocationRelativeTo(null);
-        ListaProduto = new ArrayList();
+        DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
+        //setLocationRelativeTo(null);
+        //ListaProduto = new ArrayList();
+
+        readJTable();
+    }
+
+    public void readJTable() {
+        DefaultTableModel modelo = (DefaultTableModel) tblProduto.getModel();
+
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto p : pdao.read()) {
+
+            modelo.addRow(new Object[]{
+                p.getCodProduto(),
+                p.getNomeProduto(),
+                p.getDescricao(),
+                p.getQuantidade(),
+                p.getValorUnitario()
+            });
+        }
+
     }
 
     /**
@@ -214,6 +236,11 @@ public class cadastroProduto extends javax.swing.JFrame {
         });
 
         btnPesquisarCodigoProduto.setText("Pesquisar");
+        btnPesquisarCodigoProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarCodigoProdutoActionPerformed(evt);
+            }
+        });
 
         tblProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -238,6 +265,16 @@ public class cadastroProduto extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProdutoMouseClicked(evt);
+            }
+        });
+        tblProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblProdutoKeyReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblProduto);
 
         btnEditar.setText("Editar");
@@ -248,6 +285,11 @@ public class cadastroProduto extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnFechar.setText("Fechar");
 
@@ -366,7 +408,7 @@ public class cadastroProduto extends javax.swing.JFrame {
 //        
 //        jpanel3.add(produto);
 //    }
-    
+
     private void txtCodigoProduto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoProduto1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoProduto1ActionPerformed
@@ -377,25 +419,49 @@ public class cadastroProduto extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+
+        if (tblProduto.getSelectedRow() != -1) {
+
+            Produto p = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+            //p.setListaProduto(cboTipoDeFlor1.getText());
+            p.setCodProduto(Integer.parseInt(txtCodigoProduto1.getText()));
+            p.setNomeProduto(txtNomeProduto1.getText());
+            p.setDescricao(txtDescricao1.getText());
+
+            p.setQuantidade(Integer.parseInt(txtQuantidade1.getText()));
+
+            p.setValorUnitario(Double.parseDouble(txtValorUnitario1.getText()));
+
+            //p.setCodProduto((int)tblProduto.getValueAt(tblProduto.getSelectedRow(), 0));
+            dao.update(p);
+
+            txtNomeProduto1.setText("");
+            txtDescricao1.setText("");
+            txtQuantidade1.setText("");
+            txtValorUnitario1.setText("");
+
+            readJTable();
+
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
         // TODO add your handling code here:
-        
+
         Produto p = new Produto();
         ProdutoDAO dao = new ProdutoDAO();
         //p.setListaProduto(cboTipoDeFlor1.getText());
         p.setCodProduto(Integer.parseInt(txtCodigoProduto1.getText()));
         p.setNomeProduto(txtNomeProduto1.getText());
         p.setDescricao(txtDescricao1.getText());
-        
+
         p.setQuantidade(Integer.parseInt(txtQuantidade1.getText()));
-        
+
         p.setValorUnitario(Double.parseDouble(txtValorUnitario1.getText()));
         dao.create(p);
-        
-        
-        
+        readJTable();
+
 //        int cod = Integer.parseInt(txtCodigoProduto1.getText());
 //        int qtd = Integer.parseInt(txtQuantidade1.getText());
 //        double valor = Double.parseDouble(txtValorUnitario1.getText());
@@ -407,20 +473,75 @@ public class cadastroProduto extends javax.swing.JFrame {
 //                                valor);
 //        ListaProduto.add(P);
 //        loadTrableProduto();
-        
 //        cboTipoDeFlor1.getSelectedIndex();
 //        txtCodigoProduto1.getText();
 //        txtNomeProduto1.getText();
 //        txtDescricao1.getText();
 //        txtQuantidade1.getText();
 //        txtValorUnitario1.getText();
-        
-        
+
     }//GEN-LAST:event_btnSalvar1ActionPerformed
 
     private void cboTipoDeFlor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoDeFlor1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboTipoDeFlor1ActionPerformed
+
+    private void btnPesquisarCodigoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarCodigoProdutoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPesquisarCodigoProdutoActionPerformed
+
+    private void tblProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblProdutoKeyReleased
+        // TODO add your handling code here:
+
+        if (tblProduto.getSelectedRow() != -1) {
+
+            txtCodigoProduto1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+            txtNomeProduto1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 1).toString());
+            txtDescricao1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 2).toString());
+            txtQuantidade1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 3).toString());
+            txtValorUnitario1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 4).toString());
+
+        }
+    }//GEN-LAST:event_tblProdutoKeyReleased
+
+    private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
+        // TODO add your handling code here:
+
+        if (tblProduto.getSelectedRow() != -1) {
+
+            txtCodigoProduto1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 0).toString());
+            txtNomeProduto1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 1).toString());
+            txtDescricao1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 2).toString());
+            txtQuantidade1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 3).toString());
+            txtValorUnitario1.setText(tblProduto.getValueAt(tblProduto.getSelectedRow(), 4).toString());
+
+        }
+    }//GEN-LAST:event_tblProdutoMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        // TODO add your handling code here:
+
+        Produto p = new Produto();
+        ProdutoDAO dao = new ProdutoDAO();
+        //p.setListaProduto(cboTipoDeFlor1.getText());
+       p.setCodProduto(Integer.parseInt(txtCodigoProduto1.getText()));
+//        p.setNomeProduto(txtNomeProduto1.getText());
+//        p.setDescricao(txtDescricao1.getText());
+//
+//        p.setQuantidade(Integer.parseInt(txtQuantidade1.getText()));
+//
+//        p.setValorUnitario(Double.parseDouble(txtValorUnitario1.getText()));
+        
+        //p.setCodProduto((int)tblProduto.getValueAt(tblProduto.getSelectedRow(), 0));
+        dao.delete(p);
+
+        txtNomeProduto1.setText("");
+        txtDescricao1.setText("");
+        txtQuantidade1.setText("");
+        txtValorUnitario1.setText("");
+
+        readJTable();
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
