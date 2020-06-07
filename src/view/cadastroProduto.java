@@ -6,6 +6,7 @@
 package view;
 
 import Model.Produto;
+import controller.ProdutoDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -370,10 +371,6 @@ public class cadastroProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoProduto1ActionPerformed
 
-    private void cboTipoDeFlor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoDeFlor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboTipoDeFlor1ActionPerformed
-
     private void txtQuantidade1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQuantidade1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQuantidade1ActionPerformed
@@ -384,17 +381,32 @@ public class cadastroProduto extends javax.swing.JFrame {
 
     private void btnSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvar1ActionPerformed
         // TODO add your handling code here:
-        int cod = Integer.parseInt(txtCodigoProduto1.getText());
-        int qtd = Integer.parseInt(txtQuantidade1.getText());
-        double valor = Double.parseDouble(txtValorUnitario1.getText());
         
-        Produto P = new Produto (cod,
-                                txtNomeProduto1.getText(),
-                                txtDescricao1.getText(),
-                                qtd,
-                                valor);
-        ListaProduto.add(P);
-        loadTrableProduto();
+        Produto p = new Produto();
+        ProdutoDAO dao = new ProdutoDAO();
+        //p.setListaProduto(cboTipoDeFlor1.getText());
+        p.setCodProduto(Integer.parseInt(txtCodigoProduto1.getText()));
+        p.setNomeProduto(txtNomeProduto1.getText());
+        p.setDescricao(txtDescricao1.getText());
+        
+        p.setQuantidade(Integer.parseInt(txtQuantidade1.getText()));
+        
+        p.setValorUnitario(Double.parseDouble(txtValorUnitario1.getText()));
+        dao.create(p);
+        
+        
+        
+//        int cod = Integer.parseInt(txtCodigoProduto1.getText());
+//        int qtd = Integer.parseInt(txtQuantidade1.getText());
+//        double valor = Double.parseDouble(txtValorUnitario1.getText());
+//        
+//        Produto P = new Produto (cod,
+//                                txtNomeProduto1.getText(),
+//                                txtDescricao1.getText(),
+//                                qtd,
+//                                valor);
+//        ListaProduto.add(P);
+//        loadTrableProduto();
         
 //        cboTipoDeFlor1.getSelectedIndex();
 //        txtCodigoProduto1.getText();
@@ -405,6 +417,10 @@ public class cadastroProduto extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnSalvar1ActionPerformed
+
+    private void cboTipoDeFlor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboTipoDeFlor1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboTipoDeFlor1ActionPerformed
 
     /**
      * @param args the command line arguments

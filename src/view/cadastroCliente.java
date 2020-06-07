@@ -327,7 +327,7 @@ public class cadastroCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        c_Celular.setText("");
+        c_Celular.setText("(  )   -    ");
         c_Celular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 c_CelularActionPerformed(evt);
@@ -429,11 +429,12 @@ public class cadastroCliente extends javax.swing.JFrame {
                     .addComponent(c_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel28)
-                    .addComponent(c_Cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(c_Celular, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(c_Celular, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel28)
+                        .addComponent(c_Cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -474,6 +475,11 @@ public class cadastroCliente extends javax.swing.JFrame {
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("Menu");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -556,15 +562,21 @@ public class cadastroCliente extends javax.swing.JFrame {
 
     private void bot_SalvarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bot_SalvarClienteActionPerformed
         // TODO add your handling code here:
-        int cpf = Integer.parseInt(c_Cpf.getText());
-        int celular = Integer.parseInt(c_Celular.getText());
-       
-        Cliente C = new Cliente(c_Nome.getText(),
-                                cpf,
-                                celular,
-                                c_Email.getText());
-        ListaCliente.add(C);
-        insereTabela();
+        
+        
+        
+        
+        
+        
+//        int cpf = Integer.parseInt(c_Cpf.getText());
+//        int celular = Integer.parseInt(c_Celular.getText());
+//       
+//        Cliente C = new Cliente(c_Nome.getText(),
+//                                cpf,
+//                                celular,
+//                                c_Email.getText());
+//        ListaCliente.add(C);
+//        insereTabela();
         
         
         
@@ -584,6 +596,10 @@ public class cadastroCliente extends javax.swing.JFrame {
     private void c_CelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c_CelularActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_c_CelularActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
